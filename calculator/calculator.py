@@ -1,28 +1,51 @@
 """
-Basic Calculator Module
+Intermediate Calculator with calculation history.
 """
 
+from typing import List
+from calculator.calculation import Calculation
+
 class Calculator:
-    """A simple calculator that supports basic arithmetic operations."""
+    """A calculator that supports arithmetic operations and stores history."""
+
+    history: List[Calculation] = []
 
     @staticmethod
     def add(a: float, b: float) -> float:
-        """Returns the sum of two numbers."""
-        return a + b
+        """Performs addition and stores in history."""
+        calc = Calculation(lambda x, y: x + y, a, b)
+        Calculator.history.append(calc)
+        return calc.get_result()
 
     @staticmethod
     def subtract(a: float, b: float) -> float:
-        """Returns the difference of two numbers."""
-        return a - b
+        """Performs subtraction and stores in history."""
+        calc = Calculation(lambda x, y: x - y, a, b)
+        Calculator.history.append(calc)
+        return calc.get_result()
 
     @staticmethod
     def multiply(a: float, b: float) -> float:
-        """Returns the product of two numbers."""
-        return a * b
+        """Performs multiplication and stores in history."""
+        calc = Calculation(lambda x, y: x * y, a, b)
+        Calculator.history.append(calc)
+        return calc.get_result()
 
     @staticmethod
     def divide(a: float, b: float) -> float:
-        """Returns the division of two numbers. Raises an error if dividing by zero."""
+        """Performs division and stores in history. Raises an error if dividing by zero."""
         if b == 0:
             raise ZeroDivisionError("Cannot divide by zero")
-        return a / b
+        calc = Calculation(lambda x, y: x / y, a, b)
+        Calculator.history.append(calc)
+        return calc.get_result()
+
+    @classmethod
+    def get_history(cls) -> List[Calculation]:
+        """Returns the list of past calculations."""
+        return cls.history
+
+    @classmethod
+    def clear_history(cls):
+        """Clears all stored calculations."""
+        cls.history.clear()
