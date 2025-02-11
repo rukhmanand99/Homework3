@@ -23,3 +23,8 @@ class Calculation:
     def get_result(self) -> float:
         """Returns the result of the calculation."""
         return self.result
+
+    def __repr__(self):
+        """Returns a string representation of the calculation."""
+        return f"Calculation({self.a} {self.operation.__name__} {self.b} = {self.result})"
+    
